@@ -7,6 +7,10 @@
 </head>
 <body>
     <h1>Weather Site</h1>
-    <h2>{{city}} {{temp}} daraje canti grad</h2>
+    {% if temp %}
+        <h2>{{city}} {{temp}} daraje canti grad</h2>
+    {% else %}
+        <h2>{{city}} error dama</h2>
+    {% endif %}
 </body>
 </html>
