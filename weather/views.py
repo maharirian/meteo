@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+import random
 
 def show_temp_view(request):
-    return HttpResponse('hamedan 27 daraje canti grad')
+    temp = random.randint(1,30)
+    context = {"city":"hamedan","temp":temp}
+    return render(request ,"show_temp.html",context)
