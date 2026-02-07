@@ -7,7 +7,7 @@
 </head>
 <body>
     {% for item in cities%}
-        <p>{{item.title}}</p>
+        <p><a href="{% url 'home'%}?id={{item.id}}">{{item.title}}</a></p>
     {% endfor%}
 </body>
 </html>

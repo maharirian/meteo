@@ -3,7 +3,11 @@ import requests
 from .models import City
 
 def show_temp_view(request):
-    city = City.objects.all().first()
+    city_id = request.GET.get('id')
+    if city_id:
+        city = City.objects.get(id = city_id)
+    else:
+        city = City.objects.all().first()
     lat, lon = city.lat, city.lon
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
     try:
