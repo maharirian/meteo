@@ -13,3 +13,8 @@ def show_temp_view(request):
         temp = None
     context = {"city":city.title,"temp":temp}
     return render(request ,"show_temp.html",context)
+
+def city_list_view(request):
+    cities = City.objects.all()
+    context = {"cities":cities}
+    return render(request ,"city_list.html",context)
