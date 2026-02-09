@@ -6,6 +6,19 @@
     <title>Weather</title>
 </head>
 <body>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout'%}">
+            {% csrf_token%}
+            <button type="submit">logout</button>
+        </form>
+    {% else %}
+        <form method="get" action="{% url 'login'%}">
+            {% csrf_token%}
+            <button type="submit">login</button>
+        </form>    
+    {% endif %}
+
+
     <h1>Weather Site</h1>
     {% if temp %}
         <h2>{{city}} {{temp}} daraje canti grad</h2>
