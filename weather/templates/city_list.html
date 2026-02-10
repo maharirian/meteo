@@ -6,8 +6,18 @@
     <title>City List</title>
 </head>
 <body>
+    <h1>list of city</h1>
     {% for item in cities%}
-        <p><a href="{% url 'home'%}?id={{item.id}}">{{item.title}}</a></p>
+        <div style="margin: 10px;">
+            <a href="{% url 'home'%}?id={{item.id}}">{{item.title}}</a>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'delete_city' %}" style="display:inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{item.id}}" >
+                    <input type="submit" value="delete" >
+                </form>
+            {% endif %}
+        </div>        
     {% endfor%}
 </body>
 </html>

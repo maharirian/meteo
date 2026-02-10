@@ -34,3 +34,11 @@ def add_city_view(request):
         form = CityForm()
     context = {"form": form}
     return render(request,"add_city.html",context)
+
+def delete_city_view(request):
+    if request.method == 'POST':
+        city_id = request.POST.get("id")
+        city = City.objects.filter(id=city_id).first()
+        if city:
+            city.delete()
+    return redirect('city_list')
