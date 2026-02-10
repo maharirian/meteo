@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 import requests
 from .models import City
+from .forms import CityForm
 
 def show_temp_view(request):
     city_id = request.GET.get('id')
@@ -22,3 +23,14 @@ def city_list_view(request):
     cities = City.objects.all()
     context = {"cities":cities}
     return render(request ,"city_list.html",context)
+
+def add_city_view(request):
+    if request.method == 'POST':
+        form = CityForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('city_list')
+    else:
+        form = CityForm()
+    context = {"form": form}
+    return render(request,"add_city.html",context)
