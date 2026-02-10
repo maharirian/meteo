@@ -6,9 +6,11 @@ from .forms import CityForm
 def show_temp_view(request):
     city_id = request.GET.get('id')
     if city_id:
-        city = City.objects.get(id = city_id)
+        city = City.objects.filter(id = city_id).first()
     else:
         city = City.objects.all().first()
+    if not city:
+        return render(request,"show_temp.html")
     lat, lon = city.lat, city.lon
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
     try:
@@ -25,6 +27,8 @@ def city_list_view(request):
     return render(request ,"city_list.html",context)
 
 def add_city_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         form = CityForm(request.POST)
         if form.is_valid():
@@ -36,6 +40,8 @@ def add_city_view(request):
     return render(request,"add_city.html",context)
 
 def delete_city_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         city_id = request.POST.get("id")
         city = City.objects.filter(id=city_id).first()
